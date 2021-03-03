@@ -1,4 +1,4 @@
-// ℹ️ Gets access to environment variables/settings Testing2 Hello Again!
+// ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
 require('dotenv/config');
 
