@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-// TODO: Please make sure you edit the user model to whatever makes sense in this case
 const userSchema = new Schema({
   username: {
     type: String,
@@ -14,7 +13,7 @@ const userSchema = new Schema({
   superpower: {
     type: String,
   },
-  image: {
+  guide: {
     type: String,
   }
 });
