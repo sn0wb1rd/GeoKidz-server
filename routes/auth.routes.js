@@ -65,8 +65,8 @@ router.post('/signup', (req, res) => {
 
 // will handle all POST requests to http:localhost:5005/api/signin
 router.post('/signin', (req, res) => {
-  const {username, password } = req.body;
-  console.log('signin: ', username, password);
+  const {username, password} = req.body;
+  //console.log('signin: ', username, password);
 
   // -----SERVER SIDE VALIDATION ----------
   
@@ -84,12 +84,11 @@ router.post('/signin', (req, res) => {
   //     return;  
   // }
   
-
   // Find if the user exists in the database 
   UserModel.findOne({username})
     .then((userData) => {
          //check if passwords match
-        bcrypt.compare(password, userData.passwordHash)
+        bcrypt.compare(password, userData.password)
           .then((doesItMatch) => {
               //if it matches
               if (doesItMatch) {
@@ -97,7 +96,9 @@ router.post('/signin', (req, res) => {
                 userData.passwordHash = "***";
                 req.session.loggedInUser = userData;
                 res.status(200).json(userData)
+                console.log('Yes Loggedin!')
               }
+                            
               //if passwords do not match
               else {
                   res.status(500).json({
@@ -106,7 +107,8 @@ router.post('/signin', (req, res) => {
                 return; 
               }
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err)
               res.status(500).json({
                   // error: 'Email format not correct',
                   error: 'Ai, something did not work',
@@ -120,7 +122,6 @@ router.post('/signin', (req, res) => {
           error: 'This user does not exist',
           message: err
       })
-      console.log('check2')
       return;  
     });
 
