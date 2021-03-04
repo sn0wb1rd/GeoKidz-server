@@ -9,12 +9,12 @@ let UserModel = require('../models/User.model.js')
 // will handle all POST requests to http:localhost:5005/api/signup
 router.post('/signup', (req, res) => {
   const {username, password } = req.body;
-  console.log(username, password);
+  console.log('signup: ', username, password);
 
   // -----SERVER SIDE VALIDATION ----------
   
   if (!username || !password) {
-      res.status(500)
+      res.status(500)    
         .json({
           errorMessage: 'Hey there! You forget your username or supersecret password'
         });
@@ -40,7 +40,7 @@ router.post('/signup', (req, res) => {
   // creating a salt 
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(password, salt);
-  UserModel.create({name: username, password: hash})
+  UserModel.create({username: username, password: hash})
     .then((user) => {
       // ensuring that we don't share the hash as well with the user
       user.password = "***";
@@ -62,29 +62,31 @@ router.post('/signup', (req, res) => {
     })
 });
 
+
 // will handle all POST requests to http:localhost:5005/api/signin
 router.post('/signin', (req, res) => {
   const {username, password } = req.body;
+  console.log('signin: ', username, password);
 
   // -----SERVER SIDE VALIDATION ----------
   
-  if ( !email || !password) {
-      res.status(500).json({
-          error: 'Please enter Username. email and password',
+  if ( !username || !password) {
+       res.status(500).json({
+          error: 'Please enter your username  and password',
      })
     return;  
   }
-  const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
-  if (!myRegex.test(email)) {
-      res.status(500).json({
-          error: 'Hela! This does not like an email',
-      })
-      return;  
-  }
+  // const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
+  // if (!myRegex.test(email)) {
+  //     res.status(500).json({
+  //         error: 'Hela! This does not like an email',
+  //     })
+  //     return;  
+  // }
   
 
   // Find if the user exists in the database 
-  UserModel.findOne({email})
+  UserModel.findOne({username})
     .then((userData) => {
          //check if passwords match
         bcrypt.compare(password, userData.passwordHash)
@@ -106,17 +108,19 @@ router.post('/signin', (req, res) => {
           })
           .catch(() => {
               res.status(500).json({
-                  error: 'Email format not correct',
+                  // error: 'Email format not correct',
+                  error: 'Ai, something did not work',
               })
             return; 
           });
     })
     //throw an error if the user does not exists 
-    .catch((err) => {
+    .catch((err) => {      
       res.status(500).json({
-          error: 'Email does not exist',
+          error: 'This user does not exist',
           message: err
       })
+      console.log('check2')
       return;  
     });
 
