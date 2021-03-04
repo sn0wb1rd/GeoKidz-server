@@ -1,15 +1,13 @@
 const express = require('express')
 const router = express.Router()
-
 const bcrypt = require('bcryptjs');
-
 let UserModel = require('../models/User.model.js')
 
 
-// will handle all POST requests to http:localhost:5005/api/signup
+// POST | signup - will handle all POST requests to http:localhost:5005/api/signup
 router.post('/signup', (req, res) => {
-  const {username, password } = req.body;
-  console.log('signup: ', username, password);
+  const {username, password, guide, superpower } = req.body;
+  console.log('signup: ', username, password, guide, superpower);
 
   // -----SERVER SIDE VALIDATION ----------
   
@@ -40,7 +38,7 @@ router.post('/signup', (req, res) => {
   // creating a salt 
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(password, salt);
-  UserModel.create({username: username, password: hash})
+  UserModel.create({username: username, password: hash, guide, superpower})
     .then((user) => {
       // ensuring that we don't share the hash as well with the user
       user.password = "***";
@@ -62,8 +60,7 @@ router.post('/signup', (req, res) => {
     })
 });
 
-
-// will handle all POST requests to http:localhost:5005/api/signin
+// POST | signin will handle all POST requests to http:localhost:5005/api/signin
 router.post('/signin', (req, res) => {
   const {username, password} = req.body;
   //console.log('signin: ', username, password);
@@ -97,6 +94,7 @@ router.post('/signin', (req, res) => {
                 req.session.loggedInUser = userData;
                 res.status(200).json(userData)
                 console.log('Yes Loggedin!')
+                console.log('req.session: ', req.session )
               }
                             
               //if passwords do not match
@@ -127,7 +125,7 @@ router.post('/signin', (req, res) => {
 
 });
 
-// will handle all POST requests to http:localhost:5005/api/logout
+// POST | logout will handle all POST requests to http:localhost:5005/api/logout
 router.post('/logout', (req, res) => {
   req.session.destroy();
   // Nothing to send back to the user
@@ -149,11 +147,14 @@ else {
 };
 };
 
-
-// THIS IS A PROTECTED ROUTE
+// PROTECTED ROUTES
 // will handle all get requests to http:localhost:5005/api/user
+// POST | user - will handle all POST requests to http:localhost:5005/api/signup
 router.get("/user", isLoggedIn, (req, res, next) => {
 res.status(200).json(req.session.loggedInUser);
 });
+
+// POST | mapitem - add mapitem
+// router.post("/add")
 
 module.exports = router;
