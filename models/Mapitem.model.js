@@ -11,10 +11,8 @@ const mapitemSchema = new Schema ({
     type: String,
   },
   owner: {
-    type: String,
-  },
-  question: {
-    type: String,
+    type: Schema.Types.ObjectId, 
+    ref: 'user'
   },
   locdesc: {
     type: String,
