@@ -29,8 +29,8 @@ const mapitemSchema = new Schema ({
     type: String,
   },
   objhistory: [{
-    name: {
-      type: finder,
+    finder: {
+      type: String,
     },
     lat: {
       type: Number,
@@ -41,7 +41,6 @@ const mapitemSchema = new Schema ({
     }
   }],
 });
-
 
 const MapitemModel = model('mapitem', mapitemSchema);
 

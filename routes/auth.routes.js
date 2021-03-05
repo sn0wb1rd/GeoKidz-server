@@ -7,17 +7,26 @@ let UserModel = require('../models/User.model.js')
 // POST | signup - will handle all POST requests to http:localhost:5005/api/signup
 router.post('/signup', (req, res) => {
   const {username, password, guide, superpower } = req.body;
-  console.log('signup: ', username, password, guide, superpower);
+  // console.log('signup: ', username, password, guide, superpower);
 
   // -----SERVER SIDE VALIDATION ----------
   
-  if (!username || !password) {
+  if (!username || !password || !superpower) {
+     let missingFormValue = 'supersecret password'
+     // todo: set message for when 2 values are missing a
+     if (!username && !password && !superpower) {missingFormValue = 'username, password or superpower'} else
+     if (!username) {missingFormValue = 'cool username'} else
+     if (!password) {missingFormValue = 'supersecret password'} else
+     if (!superpower) {missingFormValue = 'superpower :( Everyone has one'}
+     
+
       res.status(500)    
         .json({
-          errorMessage: 'Hey there! You forget your username or supersecret password'
+          errorMessage: `Hey there! You forget your ${missingFormValue}!`
         });
       return;  
   }
+
   // // const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
   // // if (!myRegex.test(email)) {
   // //     res.status(500).json({
@@ -47,13 +56,13 @@ router.post('/signup', (req, res) => {
     .catch((err) => {
       if (err.code === 11000) {
         res.status(500).json({
-          errorMessage: 'Ohw, this username already exists!',
+          errorMessage: 'Ohw, this name already exists! Choose a special one and remember it well!',
           message: err,
         });
       } 
       else {
         res.status(500).json({
-          errorMessage: 'Something went wrong! Go to sleep!',
+          errorMessage: 'Something went wrong! Take a deep breath and try again!',
           message: err,
         });
       }
@@ -69,14 +78,14 @@ router.post('/signin', (req, res) => {
   
   if ( !username || !password) {
        res.status(500).json({
-          error: 'Please enter your username  and password',
+        errorMessage: 'Please enter your username  and password',
      })
     return;  
   }
   // const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
   // if (!myRegex.test(email)) {
   //     res.status(500).json({
-  //         error: 'Hela! This does not like an email',
+  //         error: 'Hela! This does not looks like an email',
   //     })
   //     return;  
   // }
@@ -100,7 +109,7 @@ router.post('/signin', (req, res) => {
               //if passwords do not match
               else {
                   res.status(500).json({
-                      error: 'Passwords don\'t match',
+                    errorMessage: 'Passwords don\'t match',
                   })
                 return; 
               }
@@ -109,7 +118,7 @@ router.post('/signin', (req, res) => {
             console.log(err)
               res.status(500).json({
                   // error: 'Email format not correct',
-                  error: 'Ai, something did not work',
+                  errorMessage: 'Ai, something did not work',
               })
             return; 
           });
@@ -132,19 +141,18 @@ router.post('/logout', (req, res) => {
   res.status(204).json({});
 })
 
-
 // middleware to check if user is loggedIn
 const isLoggedIn = (req, res, next) => {  
-if (req.session.loggedInUser) {
-    //calls whatever is to be executed after the isLoggedIn function is over
-    next()
-}
-else {
-    res.status(401).json({
-        message: 'Unauthorized user',
-        code: 401,
-    })
-};
+  if (req.session.loggedInUser) {
+      //calls whatever is to be executed after the isLoggedIn function is over
+      next()
+  }
+  else {
+      res.status(401).json({
+          message: 'Unauthorized user',
+          code: 401,
+      })
+  };
 };
 
 // PROTECTED ROUTES
@@ -154,7 +162,6 @@ router.get("/user", isLoggedIn, (req, res, next) => {
 res.status(200).json(req.session.loggedInUser);
 });
 
-// POST | mapitem - add mapitem
-// router.post("/add")
+
 
 module.exports = router;
