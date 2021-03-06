@@ -22,6 +22,22 @@ const isLoggedIn = (req, res, next) => {
 // will handle all get requests to http:localhost:5005/api/user
 
 // TODO: add loggedin user als parameter
+// GET | get all mapitems -------------------------------------
+router.get('/mapitems', (req, res) => {
+  MapitemModel
+    .find()
+    .then((mapitems) => {
+      res.status(200).json(mapitems)
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errorMessage: 'Something went wrong while fetching all the mapitems',
+        message: err })
+    })
+})
+
+
+// TODO: add loggedin user als parameter
 // POST | mapitem - add mapitem -------------------------------
 router.post('/create', (req, res) => {
   // let newObjhistory = {
@@ -33,13 +49,12 @@ router.post('/create', (req, res) => {
   MapitemModel
     .create({itemname, image, owner, locdesc, objhistory})
     .then((response) => {
-      res.status(200).json(response)
-    })
+      res.status(200).json(response) })
     .catch((err) => {
       res.status(500).json({
-        errorMessage: 'Something went wrong wgile creating a new mapitem',
-      })
-  })
+        errorMessage: 'Something went wrong while creating a new mapitem',
+        message: err })
+    })
 })
 
 // TODO: add loggedin user als parameter
@@ -49,27 +64,25 @@ router.get('/mapitems/:mapitemId', (req, res) => {
     .findById(req.params.mapitemId)
     .populate('owner', {_id: 1, username: 1, superpower: 1})
     .then((response) => {
-      res.status(200).json(response)
-    })
+      res.status(200).json(response) })
     .catch((err) => {
       res.status(500).json({
-        errorMessage: 'Something went wrong while fetching a mapitem', err
-      })
-  })
+        errorMessage: 'Something went wrong while fetching a mapitem',
+        message: err })
+    })
 })
 
 // TODO: add loggedin user als parameter + do backend check if user=itemowner for deleting?
 // POST | DELETE mapitem -  based on ID -----------
 router.delete('/mapitems/:mapitemId', (req, res) => {
   MapitemModel
-  .findByIdAndDelete(req.params.mapitemId)
-  .then((response) => {res.status(200).json(response) })
-  .catch((err) => {
-    res.status(500).json({
-      error: "Something went wrong while deleting the mapitem",
-      message: err
+    .findByIdAndDelete(req.params.mapitemId)
+    .then((response) => {res.status(200).json(response) })
+    .catch((err) => {
+      res.status(500).json({
+        errorMessage: "Something went wrong while deleting the mapitem ",
+        message: err })
     })
-  })
 })
 
 
