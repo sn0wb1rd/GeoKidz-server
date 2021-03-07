@@ -15,30 +15,73 @@ const isLoggedIn = (req, res, next) => {
   }
 };
 
-// PROTECTED ROUTES
+
+// PROTECTED ROUTES -------------------------------------------
 // will handle all get requests to http:localhost:5005/api/user
 
-// TODO: add loggedin suer als parameter
-// POST | mapitem - add mapitem
-router.post("/create", (req, res) => {
-  console.log("req body --", req.body);
+// TODO: add loggedin user als parameter
+// GET | get all mapitems -------------------------------------
+router.get('/mapitems', (req, res) => {
+  MapitemModel
+    .find()
+    .then((mapitems) => {
+      res.status(200).json(mapitems)
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errorMessage: 'Something went wrong while fetching all the mapitems',
+        message: err })
+    })
+})
+
+
+// TODO: add loggedin user als parameter
+// POST | mapitem - add mapitem -------------------------------
+router.post('/create', (req, res) => {
   // let newObjhistory = {
   //   finder: 'bla',
   //   lat:52.321213,
   //   long:4.838725,
   // }
-  const { itemname, image, owner, locdesc, objhistory } = req.body;
-  console.log("POST create - req body ", req.body);
-  MapitemModel.create({ itemname, image, owner, locdesc, objhistory })
+  const {itemname, image, owner, locdesc, objhistory} = req.body;
+  MapitemModel
+    .create({itemname, image, owner, locdesc, objhistory})
     .then((response) => {
-      res.status(200).json(response);
-    })
+      res.status(200).json(response) })
     .catch((err) => {
       res.status(500).json({
-        error: "Something went wrong",
-        message: err,
-      });
-    });
-});
+        errorMessage: 'Something went wrong while creating a new mapitem',
+        message: err })
+    })
+})
+
+// TODO: add loggedin user als parameter
+// GET | mapitem - get specific mapitem based on ID -----------
+router.get('/mapitems/:mapitemId', (req, res) => {
+  MapitemModel
+    .findById(req.params.mapitemId)
+    .populate('owner', {_id: 1, username: 1, superpower: 1})
+    .then((response) => {
+      res.status(200).json(response) })
+    .catch((err) => {
+      res.status(500).json({
+        errorMessage: 'Something went wrong while fetching a mapitem',
+        message: err })
+    })
+})
+
+// TODO: add loggedin user als parameter + do backend check if user=itemowner for deleting?
+// POST | DELETE mapitem -  based on ID -----------
+router.delete('/mapitems/:mapitemId', (req, res) => {
+  MapitemModel
+    .findByIdAndDelete(req.params.mapitemId)
+    .then((response) => {res.status(200).json(response) })
+    .catch((err) => {
+      res.status(500).json({
+        errorMessage: "Something went wrong while deleting the mapitem ",
+        message: err })
+    })
+})
+
 
 module.exports = router;
