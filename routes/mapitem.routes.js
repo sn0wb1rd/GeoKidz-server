@@ -72,8 +72,35 @@ router.get('/mapitems/:mapitemId', (req, res) => {
     })
 })
 
+// TODO: add loggedin user als parameter
+// PATCH | edit a mapitem - get specific mapitem based on ID -----------
+router.patch('/mapitems/:mapitemId', (req, res) => {
+  let itemId = req.params.mapitemId
+  const {locdesc, finder, lat, long} = req.body
+  // Key Objhistory is an object with three keys
+  let newObjhistory = {
+      finder: finder,
+      lat: lat,
+      long: long
+    }    
+
+  //Using Set for updating the location, and using a push for adding a finders loc to locdesc
+  MapitemModel
+    .findByIdAndUpdate(itemId, {
+      $push: {objhistory: newObjhistory }, 
+      $set: {locdesc: locdesc}},
+      {new: true})
+    .then((response) => {res.status(200).json(response)})
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({
+        errorMessage: 'Something went wrong while updateing a mapitem',
+        message: err })
+    })
+})
+
 // TODO: add loggedin user als parameter + do backend check if user=itemowner for deleting?
-// POST | DELETE mapitem -  based on ID -----------
+// DELETE | mapitem -  based on ID -----------
 router.delete('/mapitems/:mapitemId', (req, res) => {
   MapitemModel
     .findByIdAndDelete(req.params.mapitemId)
