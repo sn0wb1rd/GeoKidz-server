@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const mapitemSchema = new Schema ({
+const mapitemSchema = new Schema({
   type: {
     type: String,
   },
@@ -11,8 +11,8 @@ const mapitemSchema = new Schema ({
     type: String,
   },
   owner: {
-    type: Schema.Types.ObjectId, 
-    ref: 'user'
+    type: Schema.Types.ObjectId,
+    ref: "user",
   },
   locdesc: {
     type: String,
@@ -26,20 +26,22 @@ const mapitemSchema = new Schema ({
   founders: {
     type: String,
   },
-  objhistory: [{
-    finder: {
-      type: String,
+  objhistory: [
+    {
+      finder: {
+        type: String,
+      },
+      lat: {
+        type: Number,
+      },
+      long: {
+        type: Number,
+        required: true,
+      },
     },
-    lat: {
-      type: Number,
-    },
-    long: {
-      type: Number,
-      required: true
-    }
-  }],
+  ],
 });
 
-const MapitemModel = model('mapitem', mapitemSchema);
+const MapitemModel = model("mapitem", mapitemSchema);
 
-module.exports = MapitemModel
+module.exports = MapitemModel;
