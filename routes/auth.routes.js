@@ -143,10 +143,7 @@ router.post('/logout', (req, res) => {
 
 // POST | stores the finded treasure
 // TODO later on: user/finding/
-router.post('/finding/:userId', (req, res) => {
-  let userId = req.params.userId
-  // objectid mapitem: 6045f2070f47d2259b57def5
-  // let userId = "6045019732bae70f2dfceb96"
+router.post('/user/finding/:userId', (req, res) => {
   const {itemname, owner, lat, long} = req.body
   let newFinding = {
     itemname: itemname,
@@ -154,10 +151,9 @@ router.post('/finding/:userId', (req, res) => {
     lat: lat,
     long: long
   }
-  console.log('yeay in the user findings newFinding ',newFinding)
-  
+
   UserModel
-    .findByIdAndUpdate(userId, {
+    .findByIdAndUpdate(req.params.userId, {
       $push: {findings: newFinding}}, 
       {new: true})
     .then((response) => {res.status(200).json(response)})
@@ -167,31 +163,24 @@ router.post('/finding/:userId', (req, res) => {
         errorMessage: 'Something went wrong while updating a userprofile with findings',
         message: err })
     })
-    
-
-
 })
 
 
 // GET | gets al the data from a user
 // TODO later on: user/details/:userId
-router.get('/details/:userId', (req, res) => {
-  console.log('yeay in the user details')
-  console.log(req.params.userId)
+router.get('/user/details/:userId', (req, res) => {
   UserModel
     .findById(req.params.userId)
     .populate('findings')
     .then((response) => {
       console.log("in user get: ", response) 
       res.status(200).json(response)    
-    })
-      
+    })      
     .catch((err) => {
       res.status(500).json({
         error: 'This user does not exist',
         message: err
       }) 
-      return;
     })  
 })
 
