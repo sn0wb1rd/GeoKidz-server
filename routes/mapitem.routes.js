@@ -1,20 +1,18 @@
-const express = require('express')
-const router = express.Router()
-let MapitemModel = require('../models/Mapitem.model.js')
-
+const express = require("express");
+const router = express.Router();
+let MapitemModel = require("../models/Mapitem.model.js");
 
 // middleware to check if user is loggedIn
-const isLoggedIn = (req, res, next) => {  
+const isLoggedIn = (req, res, next) => {
   if (req.session.loggedInUser) {
-      //calls whatever is to be executed after the isLoggedIn function is over
-      next()
+    //calls whatever is to be executed after the isLoggedIn function is over
+    next();
+  } else {
+    res.status(401).json({
+      message: "Unauthorized user",
+      code: 401,
+    });
   }
-  else {
-      res.status(401).json({
-          message: 'Unauthorized user',
-          code: 401,
-      })
-  };
 };
 
 
