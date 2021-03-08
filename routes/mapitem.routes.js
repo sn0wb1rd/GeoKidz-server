@@ -85,14 +85,14 @@ router.patch('/mapitems/:mapitemId', (req, res) => {
   //Using Set for updating the location, and using a push for adding a finders loc to locdesc
   MapitemModel
     .findByIdAndUpdate(itemId, {
-      $push: {objhistory: newObjhistory }, 
+      $push: {objhistory: newObjhistory}, 
       $set: {locdesc: locdesc}},
       {new: true})
     .then((response) => {res.status(200).json(response)})
     .catch((err) => {
       console.log(err)
       res.status(500).json({
-        errorMessage: 'Something went wrong while updateing a mapitem',
+        errorMessage: 'Something went wrong while updating a mapitem',
         message: err })
     })
 })

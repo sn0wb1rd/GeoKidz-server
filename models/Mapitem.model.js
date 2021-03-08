@@ -36,7 +36,6 @@ const mapitemSchema = new Schema({
       },
       long: {
         type: Number,
-        required: true,
       },
     },
   ],
