@@ -51,6 +51,9 @@ app.use("/api", authRoutes);
 const mapRoutes = require("./routes/mapitem.routes");
 app.use("/api", mapRoutes);
 
+const cloudinaryRoutes = require("./routes/cloudinary.routes");
+app.use("/api", cloudinaryRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);
 
