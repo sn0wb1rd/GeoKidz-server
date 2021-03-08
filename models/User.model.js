@@ -16,11 +16,22 @@ const userSchema = new Schema({
   guide: {
     type: String,
   },
-  findings: {
-    type: Schema.Types.ObjectId, 
-    ref: 'mapitem'
-  },
-
+  findings: [
+    {
+      itemname: {
+        type: String,
+      },
+      owner: {
+        type: String,
+      },
+      lat: {
+        type: Number,
+      },
+      long: {
+        type: Number,
+      },
+    },
+  ],
 });
 
 // add ref to foundedtreasure and ownedtreasure later

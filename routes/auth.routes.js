@@ -141,6 +141,61 @@ router.post('/logout', (req, res) => {
   res.status(204).json({});
 })
 
+// POST | stores the finded treasure
+// TODO later on: user/finding/
+router.post('/finding/:userId', (req, res) => {
+  let userId = req.params.userId
+  // objectid mapitem: 6045f2070f47d2259b57def5
+  // let userId = "6045019732bae70f2dfceb96"
+  const {itemname, owner, lat, long} = req.body
+  let newFinding = {
+    itemname: itemname,
+    owner: owner,
+    lat: lat,
+    long: long
+  }
+  console.log('yeay in the user findings newFinding ',newFinding)
+  
+  UserModel
+    .findByIdAndUpdate(userId, {
+      $push: {findings: newFinding}}, 
+      {new: true})
+    .then((response) => {res.status(200).json(response)})
+    .catch((err) => {
+      console.log(err)
+      res.status(500).json({
+        errorMessage: 'Something went wrong while updating a userprofile with findings',
+        message: err })
+    })
+    
+
+
+})
+
+
+// GET | gets al the data from a user
+// TODO later on: user/details/:userId
+router.get('/details/:userId', (req, res) => {
+  console.log('yeay in the user details')
+  console.log(req.params.userId)
+  UserModel
+    .findById(req.params.userId)
+    .populate('findings')
+    .then((response) => {
+      console.log("in user get: ", response) 
+      res.status(200).json(response)    
+    })
+      
+    .catch((err) => {
+      res.status(500).json({
+        error: 'This user does not exist',
+        message: err
+      }) 
+      return;
+    })  
+})
+
+
 // middleware to check if user is loggedIn
 const isLoggedIn = (req, res, next) => {  
   if (req.session.loggedInUser) {
@@ -155,12 +210,14 @@ const isLoggedIn = (req, res, next) => {
   };
 };
 
+
 // PROTECTED ROUTES
 // will handle all get requests to http:localhost:5005/api/user
-// POST | user - will handle all POST requests to http:localhost:5005/api/signup
 router.get("/user", isLoggedIn, (req, res, next) => {
 res.status(200).json(req.session.loggedInUser);
 });
+
+
 
 
 
