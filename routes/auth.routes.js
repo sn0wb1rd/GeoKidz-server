@@ -144,8 +144,9 @@ router.post('/logout', (req, res) => {
 // POST | stores the finded treasure
 // TODO later on: user/finding/
 router.post('/user/finding/:userId', (req, res) => {
-  const {itemname, owner, lat, long} = req.body
+  const {mapitemId, itemname, owner, lat, long} = req.body
   let newFinding = {
+    mapitemId: mapitemId,
     itemname: itemname,
     owner: owner,
     lat: lat,
