@@ -18,6 +18,9 @@ const userSchema = new Schema({
   },
   findings: [
     {
+      mapitemId: {
+        type: String,
+      },
       itemname: {
         type: String,
       },
