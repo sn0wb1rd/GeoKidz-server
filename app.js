@@ -58,5 +58,3 @@ app.use("/api", cloudinaryRoutes);
 require('./error-handling')(app);
 
 module.exports = app;
-
-//TEST

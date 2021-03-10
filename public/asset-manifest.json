@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/static/css/main.efc6de1a.chunk.css",
+    "main.js": "/static/js/main.06ffc65c.chunk.js",
+    "main.js.map": "/static/js/main.06ffc65c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.46b9aeb8.js",
+    "runtime-main.js.map": "/static/js/runtime-main.46b9aeb8.js.map",
+    "static/css/2.b07efd9f.chunk.css": "/static/css/2.b07efd9f.chunk.css",
+    "static/js/2.de78909b.chunk.js": "/static/js/2.de78909b.chunk.js",
+    "static/js/2.de78909b.chunk.js.map": "/static/js/2.de78909b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.b07efd9f.chunk.css.map": "/static/css/2.b07efd9f.chunk.css.map",
+    "static/css/main.efc6de1a.chunk.css.map": "/static/css/main.efc6de1a.chunk.css.map",
+    "static/js/2.de78909b.chunk.js.LICENSE.txt": "/static/js/2.de78909b.chunk.js.LICENSE.txt",
+    "static/media/fox-face.28575f21.png": "/static/media/fox-face.28575f21.png",
+    "static/media/fox-right.155b9cb8.png": "/static/media/fox-right.155b9cb8.png",
+    "static/media/list.c98df85f.svg": "/static/media/list.c98df85f.svg",
+    "static/media/pinguin-face.9fdc566e.png": "/static/media/pinguin-face.9fdc566e.png",
+    "static/media/round-map.cff9d400.png": "/static/media/round-map.cff9d400.png",
+    "static/media/unicorn-34.da70088b.png": "/static/media/unicorn-34.da70088b.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.46b9aeb8.js",
+    "static/css/2.b07efd9f.chunk.css",
+    "static/js/2.de78909b.chunk.js",
+    "static/css/main.efc6de1a.chunk.css",
+    "static/js/main.06ffc65c.chunk.js"
+  ]
+}

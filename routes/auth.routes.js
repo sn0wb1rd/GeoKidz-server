@@ -152,6 +152,7 @@ router.post('/user/finding/:userId', (req, res) => {
     lat: lat,
     long: long
   }
+  console.log('new finding ', newFinding)
 
   UserModel
     .findByIdAndUpdate(req.params.userId, {
