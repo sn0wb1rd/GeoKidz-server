@@ -2,21 +2,22 @@ const express = require("express");
 const router = express.Router();
 let MapitemModel = require("../models/Mapitem.model.js");
 
-// middleware to check if user is loggedIn
-const isLoggedIn = (req, res, next) => {
-  if (req.session.loggedInUser) {
-    //calls whatever is to be executed after the isLoggedIn function is over
-    next();
-  } else {
-    res.status(401).json({
-      message: "Unauthorized user",
-      code: 401,
-    });
-  }
-};
-
 // PROTECTED ROUTES -------------------------------------------
 // will handle all get requests to http:localhost:5005/api/user
+
+// middleware to check if user is loggedIn
+const isLoggedIn = (req, res, next) => {  
+  if (req.session.loggedInUser) {
+      //calls whatever is to be executed after the isLoggedIn function is over
+      next()
+  }
+  else {
+      res.status(401).json({
+          message: 'Unauthorized user',
+          code: 401,
+      })
+  };
+};
 
 // TODO: add loggedin user als parameter
 // GET | get all mapitems -------------------------------------
@@ -35,7 +36,7 @@ router.get("/mapitems", (req, res) => {
 
 // TODO: add loggedin user als parameter
 // POST | mapitem - add mapitem -------------------------------
-router.post("/create", (req, res) => {
+router.post('/create', isLoggedIn, (req, res) => {
   // let newObjhistory = {
   //   finder: 'bla',
   //   lat:52.321213,
@@ -113,9 +114,16 @@ router.delete("/mapitems/:mapitemId", (req, res) => {
     .catch((err) => {
       res.status(500).json({
         errorMessage: "Something went wrong while deleting the mapitem ",
-        message: err,
-      });
-    });
-});
+        message: err })
+    })
+})
+
+// PROTECTED ROUTES
+// will handle all get requests to http:localhost:5005/api/user
+router.get("/mapitems", isLoggedIn, (req, res, next) => {
+  res.status(200).json(req.session.loggedInUser);
+  });
+  
+  
 
 module.exports = router;
