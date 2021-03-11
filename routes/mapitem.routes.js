@@ -35,7 +35,6 @@ router.get('/mapitems', (req, res) => {
 })
 
 
-// TODO: add loggedin user als parameter
 // POST | mapitem - add mapitem -------------------------------
 router.post('/create', isLoggedIn, (req, res) => {
   // let newObjhistory = {
@@ -57,7 +56,7 @@ router.post('/create', isLoggedIn, (req, res) => {
 
 // TODO: add loggedin user als parameter
 // GET | mapitem - get specific mapitem based on ID -----------
-router.get('/mapitems/:mapitemId', (req, res) => {
+router.get('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
   MapitemModel
     .findById(req.params.mapitemId)
     .populate('owner', {_id: 1, username: 1, superpower: 1})
@@ -72,7 +71,7 @@ router.get('/mapitems/:mapitemId', (req, res) => {
 
 // TODO: add loggedin user als parameter
 // PATCH | edit a mapitem - get specific mapitem based on ID -----------
-router.patch('/mapitems/:mapitemId', (req, res) => {
+router.patch('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
   let itemId = req.params.mapitemId
   const {locdesc, finder, lat, long} = req.body
   // Key Objhistory is an object with three keys
@@ -97,9 +96,9 @@ router.patch('/mapitems/:mapitemId', (req, res) => {
     })
 })
 
-// TODO: add loggedin user als parameter + do backend check if user=itemowner for deleting?
+// TODO: backend check if user=itemowner for deleting?
 // DELETE | mapitem -  based on ID -----------
-router.delete('/mapitems/:mapitemId', (req, res) => {
+router.delete('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
   MapitemModel
     .findByIdAndDelete(req.params.mapitemId)
     .then((response) => {res.status(200).json(response) })

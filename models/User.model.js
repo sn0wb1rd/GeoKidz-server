@@ -13,6 +13,9 @@ const userSchema = new Schema({
   superpower: {
     type: String,
   },
+  points: {
+    type: Number,
+  },
   guide: {
     type: String,
   },
