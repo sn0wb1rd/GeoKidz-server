@@ -71,7 +71,7 @@ router.get('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
 
 // TODO: add loggedin user als parameter
 // PATCH | edit a mapitem - get specific mapitem based on ID -----------
-router.patch('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
+router.patch('/mapitems/:mapitemId', (req, res) => {
   let itemId = req.params.mapitemId
   const {locdesc, finder, lat, long} = req.body
   // Key Objhistory is an object with three keys
