@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.dab3b700.chunk.css",
-    "main.js": "/static/js/main.88949e73.chunk.js",
-    "main.js.map": "/static/js/main.88949e73.chunk.js.map",
+    "main.js": "/static/js/main.56b3a7eb.chunk.js",
+    "main.js.map": "/static/js/main.56b3a7eb.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.46b9aeb8.js",
     "runtime-main.js.map": "/static/js/runtime-main.46b9aeb8.js.map",
     "static/css/2.db898976.chunk.css": "/static/css/2.db898976.chunk.css",
@@ -13,7 +13,7 @@
     "static/css/main.dab3b700.chunk.css.map": "/static/css/main.dab3b700.chunk.css.map",
     "static/js/2.a04c214f.chunk.js.LICENSE.txt": "/static/js/2.a04c214f.chunk.js.LICENSE.txt",
     "static/media/alexandra-westendorp.4d6c5d15.jpg": "/static/media/alexandra-westendorp.4d6c5d15.jpg",
-    "static/media/cindy-teeven.77b672cb.png": "/static/media/cindy-teeven.77b672cb.png",
+    "static/media/cindy-teeven.96e00cd8.png": "/static/media/cindy-teeven.96e00cd8.png",
     "static/media/fox-face.28575f21.png": "/static/media/fox-face.28575f21.png",
     "static/media/list.c98df85f.svg": "/static/media/list.c98df85f.svg",
     "static/media/notifications.css": "/static/media/notification.c5d9251e.ttf",
@@ -27,6 +27,6 @@
     "static/css/2.db898976.chunk.css",
     "static/js/2.a04c214f.chunk.js",
     "static/css/main.dab3b700.chunk.css",
-    "static/js/main.88949e73.chunk.js"
+    "static/js/main.56b3a7eb.chunk.js"
   ]
 }
