@@ -56,16 +56,10 @@ router.post('/create', isLoggedIn, (req, res) => {
 
 // TODO: add loggedin user als parameter
 // GET | mapitem - get specific mapitem based on ID -----------
-<<<<<<< HEAD
-router.get("/mapitems/:mapitemId", (req, res) => {
-  MapitemModel.findById(req.params.mapitemId)
-    .populate("owner", { _id: 1, username: 1, superpower: 1 })
-=======
 router.get('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
   MapitemModel
     .findById(req.params.mapitemId)
     .populate('owner', {_id: 1, username: 1, superpower: 1})
->>>>>>> origin/master
     .then((response) => {
       res.status(200).json(response);
     })
@@ -112,18 +106,10 @@ router.patch("/mapitems/:mapitemId", (req, res) => {
 
 // TODO: backend check if user=itemowner for deleting?
 // DELETE | mapitem -  based on ID -----------
-<<<<<<< HEAD
-router.delete("/mapitems/:mapitemId", (req, res) => {
-  MapitemModel.findByIdAndDelete(req.params.mapitemId)
-    .then((response) => {
-      res.status(200).json(response);
-    })
-=======
 router.delete('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
   MapitemModel
     .findByIdAndDelete(req.params.mapitemId)
     .then((response) => {res.status(200).json(response) })
->>>>>>> origin/master
     .catch((err) => {
       res.status(500).json({
         errorMessage: "Something went wrong while deleting the mapitem ",
