@@ -37,12 +37,16 @@ router.get('/mapitems', (req, res) => {
 
 // POST | mapitem - add mapitem -------------------------------
 router.post('/create', isLoggedIn, (req, res) => {
-  // let newObjhistory = {
-  //   finder: 'bla',
-  //   lat:52.321213,
-  //   long:4.838725,
-  // }
   const {itemname, image, owner, locdesc, objhistory} = req.body;
+  
+  if ( !itemname || !image || !owner || !locdesc || !objhistory) {
+    res.status(500).json({
+     errorMessage: 'Please make sure you have all field filled in!',
+    })
+    return;  
+    }
+
+  
   MapitemModel
     .create({itemname, image, owner, locdesc, objhistory})
     .then((response) => {

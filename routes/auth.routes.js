@@ -26,20 +26,20 @@ router.post('/signup', (req, res) => {
       return;  
   }
 
-  // // const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
-  // // if (!myRegex.test(email)) {
-  // //     res.status(500).json({
-  // //       errorMessage: 'Email format not correct'
-  // //     });
-  // //     return;  
-  // // }
-  // const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
-  // if (!myPassRegex.test(password)) {
-  //   res.status(500).json({
-  //     errorMessage: 'You need a really special password with at least 8 characters a number and an Uppercase letter!'
-  //   });
-  //   return;  
+  // const myRegex = new RegExp(/^[a-z0-9](?!.*?[^\na-z0-9]{2})[^\s@]+@[^\s@]+\.[^\s@]+[a-z0-9]$/);
+  // if (!myRegex.test(email)) {
+  //     res.status(500).json({
+  //       errorMessage: 'Email format not correct'
+  //     });
+  //     return;  
   // }
+  const myPassRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/);
+  if (!myPassRegex.test(password)) {
+    res.status(500).json({
+      errorMessage: 'You need a really special password with at least 8 characters a number and an Uppercase letter!'
+    });
+    return;  
+  }
   
 
   // NOTE: We have used the Sync methods here. 
@@ -141,7 +141,7 @@ router.post('/logout', (req, res) => {
 
 // POST | stores the finded treasure
 // TODO later on: user/finding/
-router.post('/user/finding/:userId', (req, res) => {
+router.patch('/user/finding/:userId', (req, res) => {
   const {mapitemId, itemname, owner, lat, long, points} = req.body
   let newFinding = {
     mapitemId: mapitemId,
@@ -154,6 +154,7 @@ router.post('/user/finding/:userId', (req, res) => {
 
   UserModel
     .findByIdAndUpdate(req.params.userId, {
+      $set: {points: points},
       $push: {findings: newFinding}}, 
       {new: true})
     .then((response) => {res.status(200).json(response)})
