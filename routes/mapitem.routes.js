@@ -56,7 +56,7 @@ router.post('/create', isLoggedIn, (req, res) => {
 
 // TODO: add loggedin user als parameter
 // GET | mapitem - get specific mapitem based on ID -----------
-router.get('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
+router.get('/mapitems/:mapitemId', (req, res) => {
   MapitemModel
     .findById(req.params.mapitemId)
     .populate('owner', {_id: 1, username: 1, superpower: 1})
@@ -106,7 +106,7 @@ router.patch("/mapitems/:mapitemId", (req, res) => {
 
 // TODO: backend check if user=itemowner for deleting?
 // DELETE | mapitem -  based on ID -----------
-router.delete('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
+router.delete('/mapitems/:mapitemId', (req, res) => {
   MapitemModel
     .findByIdAndDelete(req.params.mapitemId)
     .then((response) => {res.status(200).json(response) })
@@ -119,9 +119,9 @@ router.delete('/mapitems/:mapitemId', isLoggedIn, (req, res) => {
 
 // PROTECTED ROUTES
 // will handle all get requests to http:localhost:5005/api/user
-router.get("/mapitems", isLoggedIn, (req, res, next) => {
-  res.status(200).json(req.session.loggedInUser);
-  });
+// router.get("/mapitems", isLoggedIn, (req, res, next) => {
+//   res.status(200).json(req.session.loggedInUser);
+//   });
   
   
 
