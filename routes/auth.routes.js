@@ -7,7 +7,6 @@ let UserModel = require('../models/User.model.js')
 // POST | signup - will handle all POST requests to http:localhost:5005/api/signup
 router.post('/signup', (req, res) => {
   const {username, password, guide, superpower } = req.body;
-  // console.log('signup: ', username, password, guide, superpower);
 
   // -----SERVER SIDE VALIDATION ----------
   
@@ -72,7 +71,6 @@ router.post('/signup', (req, res) => {
 // POST | signin will handle all POST requests to http:localhost:5005/api/signin
 router.post('/signin', (req, res) => {
   const {username, password} = req.body;
-  //console.log('signin: ', username, password);
 
   // -----SERVER SIDE VALIDATION ----------
   
@@ -207,9 +205,5 @@ const isLoggedIn = (req, res, next) => {
 router.get("/user", isLoggedIn, (req, res, next) => {
 res.status(200).json(req.session.loggedInUser);
 });
-
-
-
-
 
 module.exports = router;
