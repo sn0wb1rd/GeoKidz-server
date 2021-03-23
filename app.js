@@ -57,6 +57,9 @@ app.use("/api", mapRoutes);
 const cloudinaryRoutes = require("./routes/cloudinary.routes");
 app.use("/api", cloudinaryRoutes);
 
+const pointsRoute = require("./routes/points.js");
+app.use("/api", cloudinaryRoutes);
+
 app.use((req, res, next) => {
 	// If no routes match, send them the React HTML.
 	res.sendFile(__dirname + "/public/index.html");
